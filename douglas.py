@@ -13,7 +13,7 @@ def login_and_access_menu():
         # browser = p.chromium.launch(channel="msedge", headless=False, args=["--start-maximized"])
         
         context = browser.new_context(viewport={"width": 1280, "height": 800}, record_video_dir="videos/")
-        # context.tracing.start(screenshots=True, snapshots=True, sources=True)
+        context.tracing.start(screenshots=True, snapshots=True, sources=True)
 
         page = context.new_page()
 
@@ -41,8 +41,13 @@ def login_and_access_menu():
             page.wait_for_timeout(50000)
             # page.wait_for_load_state('networkidle')
             print(f"Loaded URL: {url}")
+            
+            
 
-        # context.tracing.stop(path = "trace24.zip")
+        
+        timestamp = int (time.time())
+        trace_filename = f"trace_view/trace_{timestamp}.zip"
+        context.tracing.stop(path= trace_filename)
         context.close()
         browser.close()
 
